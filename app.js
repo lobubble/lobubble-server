@@ -49,6 +49,7 @@ var FacebookTokenStrategy = require('passport-facebook-token');
 
 passport.use(new FacebookTokenStrategy({
     clientID: "206469993192597",
+    profileFields: ['emails'],
     clientSecret: "a0b5f9955a5e9f8a24b45adc0326ff3f"
   }, function(accessToken, refreshToken, profile, done) {
     User.findOrCreate({facebookId: profile.id}, function (error, user) {
