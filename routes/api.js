@@ -41,8 +41,15 @@ router.get('/login', function(req, res, next){
 		// }
 
         try {
-			res.send(body);
-			// mysql_query("insert into `account` (`id`, `token`, `fb_id`, `time`) values(NULL, '"+access_token+"')")
+
+			body = JSON.parse(body);
+			mysql_query("insert into `account` (`id`, `token`, `fb_id`, `time`) values(NULL, '"+access_token+"', '"+body.id+"', CURRENT_TIMESTAMP) ON DUPLICATE KEY UPDATE `token`='"+access_token+"'", function(err, rows, fields){
+				if(err){
+					next(err);
+					return;
+				}
+				res.send(body);
+			});
         } catch (error) {
 			next(error);
         }
