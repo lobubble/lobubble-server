@@ -98,7 +98,7 @@ router.get('/getFriendList', function(req, res, next){
 
 
 router.get('/getMyRecommend', function(req, res, next){
-	var access_token = req.query.access_token;
+	var access_token = req.query.access_token?req.query.access_token:"";
 	var fb_id = req.query.id?req.query.id:NULL;
 	var fQuery = fb_id?fb_id:"(SELECT `account`.`fb_id` FROM `account` WHERE `account`.`token` = '"+access_token+"')";
 
@@ -120,7 +120,11 @@ router.get('/addMyRecommend', function(req, res, next){
 			next(err);
 			return;
 		}
-		res.send("success");
+		request({
+			url: req.protocol + '://' + req.get('host') + '/api/v1/getMyRecommend?access_token=' + access_token
+		}, function(err, res2, body){
+			res.send(body);
+		});
 	});
 });
 
