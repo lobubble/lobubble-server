@@ -165,6 +165,18 @@ router.post('/changeMyIntroduce', function(req, res, next){
 	});
 });
 
+router.get('/getUserInfomation', function(req, res, next){
+	var access_token = req.query.access_token;
+	var fb_id = req.query.id?req.query.id:"(SELECT `fb_id` FROM `account` WHERE `token` = '"+ access_token +"')";
+	
+	mysql_query("SELECT * FROM `user` WHERE `fb_id` = "+fb_id+";", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		res.send(rows);
+	})	
+});
 
 
 

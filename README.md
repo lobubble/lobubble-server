@@ -139,8 +139,34 @@ Node.js server for lobubble at Startup Weekend
 
 
  - POST /api/v1/changeMyIntroduce?access_token=*{access_token}*
-	 - Parameter: introduce: text
+	 - body:
+		- introduce: text
 	 - 자기소개 수정
+```
+[
+    {
+        "id":2,
+        "fb_id":"1512965602112023",
+        "target_id":"1916006061951887", 
+        "time":"2017-04-29T12:38:27.000Z",
+        "name":"Kim Hanseulmaro",
+        "picture":"https://scontent.xx.fbcdn.net/v/t1.0-1/s480x480/15202551_1289281151147137_5720633694706240800_n.jpg?oh=863fa9aba32067b40e0d30c58b88ac6b&oe=5989B21B"
+    },
+    {
+        "id":4,
+        "fb_id":"1512965602112023",
+        "target_id":"undefined",
+        "time":"2017-04-29T12:47:00.000Z",
+        "name":"Kim Hanseulmaro",
+        "picture":"https://scontent.xx.fbcdn.net/v/t1.0-1/s480x480/15202551_1289281151147137_5720633694706240800_n.jpg?oh=863fa9aba32067b40e0d30c58b88ac6b&oe=5989B21B"
+    }
+]
+```
+
+
+ - GET /api/v1/getUserInfomation?access_token=*{access_token}*
+ - GET /api/v1/getUserInfomation?id=*{페이스북 아이디}*
+	 - 1명에 대한 유저 정보 가져오기
 ```
 [
     {
