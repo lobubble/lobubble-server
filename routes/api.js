@@ -226,7 +226,15 @@ router.get('/getCustomImage', function(req, res, next) {
 				next(err);
 				return;
 			}
-			res.send(rows);
+			
+			mysql_query("SELECT `id`, `fi_id`, `picture` AS `file`, `time` FROM `user` WHERE `fb_id` = " + fb_id, function(err, rows2, fields2){
+				if(err){
+					next(err);
+					return;
+				}
+				rows.push(rows2[0]);
+				res.send(rows);
+			});
 		});
 		
 	} catch (error) {
