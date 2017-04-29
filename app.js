@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
 
 var routes = require('./routes/index');
 var apis = require('./routes/api');
@@ -37,8 +36,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+app.use(bodyParser());
 
 app.use( session({ 
 	secret: 'lobubble',
@@ -52,13 +52,20 @@ app.use( session({
     saveUninitialized: true
 }));
 
-// app.use(express.cookieSession({ secret: 'tobo!', maxAge: 360*5 }));
+
+var passport = require('passport');
+var FacebookTokenStrategy = require('passport-facebook-token');
+
 app.use(passport.initialize());
 app.use(passport.session());  
 
 
 
-var FacebookTokenStrategy = require('passport-facebook-token');
+
+// app.use(express.cookieSession({ secret: 'tobo!', maxAge: 360*5 }));
+
+
+
 
 passport.use(new FacebookTokenStrategy({
     clientID: "206469993192597",
@@ -78,7 +85,18 @@ passport.use(new FacebookTokenStrategy({
 ));
 
 
-app.post('/auth/facebook/token',
+passport.serializeUser(function(user, done) {
+  console.log(user);
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+
+
+app.get('/auth/facebook/token',
   passport.authenticate('facebook-token'),
   function (req, res) {
     // do something with req.user 
@@ -91,12 +109,12 @@ app.post('/auth/facebook/token',
 
 
 
-
-
-
 app.use('/', routes);
 app.use('/api/', apis);
 app.use('/api/v1', apis);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
