@@ -13,6 +13,7 @@
     "express": "~4.13.4",
     "express-session": "^1.15.2",
     "morgan": "~1.7.0",
+    "mysql": "^2.13.0",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-facebook-token": "^3.3.0",

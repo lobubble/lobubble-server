@@ -79,7 +79,7 @@ passport.use(new FacebookTokenStrategy({
         'token': accessToken
     }
 
-    return done(null, user); // the user object we just made gets passed to the route's controller as `req.user`
+    return done(null, profile); // the user object we just made gets passed to the route's controller as `req.user`
 
   }
 ));
@@ -101,7 +101,7 @@ app.get('/auth/facebook/token',
   function (req, res) {
     // do something with req.user 
     console.log(req.user);
-    res.send(req.user? 200 : 401);
+    res.send(req.user);
   }
 );
 
