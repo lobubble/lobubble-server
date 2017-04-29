@@ -232,7 +232,7 @@ router.get('/getCustomImage', function(req, res, next) {
 					next(err);
 					return;
 				}
-				rows.push(rows2[0]);
+				rows.splice(0,0,rows2[0]);
 				res.send(rows);
 			});
 		});
