@@ -105,7 +105,7 @@ router.get('/getMyRecommend', function(req, res, next){
 
 router.get('/addMyRecommend', function(req, res, next){
 	var access_token = req.query.access_token;
-	var friend_id = req.query.id;
+	var friend_id = req.query.friend_id;
 	mysql_query("REPLACE INTO `recommend` (`id`, `fb_id`, `target_id`, `time`) VALUES(NULL, (SELECT `account`.`fb_id` FROM `account` WHERE `account`.`token` = '"+access_token+"'), '"+friend_id+"', CURRENT_TIMESTAMP)", function(err, rows, fields){
 		if(err){
 			next(err);
