@@ -227,7 +227,7 @@ router.get('/getCustomImage', function(req, res, next) {
 				return;
 			}
 			
-			mysql_query("SELECT `id`, `fi_id`, `picture` AS `file`, `time` FROM `user` WHERE `fb_id` = " + fb_id, function(err, rows2, fields2){
+			mysql_query("SELECT `id`, `fb_id`, `picture` AS `file`, `time` FROM `user` WHERE `fb_id` = " + fb_id, function(err, rows2, fields2){
 				if(err){
 					next(err);
 					return;
