@@ -41,6 +41,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.use(express.cookieSession({ secret: 'tobo!', maxAge: 360*5 }));
 app.use(passport.initialize());
 app.use(passport.session());  
 
