@@ -49,12 +49,18 @@ var FacebookTokenStrategy = require('passport-facebook-token');
 
 passport.use(new FacebookTokenStrategy({
     clientID: "206469993192597",
-    profileFields: ['emails'],
     clientSecret: "a0b5f9955a5e9f8a24b45adc0326ff3f"
   }, function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({facebookId: profile.id}, function (error, user) {
-      return done(error, user);
-    });
+    
+    var user = {
+        'email': profile.emails[0].value,
+        'name' : profile.name.givenName + ' ' + profile.name.familyName,
+        'id'   : profile.id,
+        'token': accessToken
+    }
+
+    return done(null, user); // the user object we just made gets passed to the route's controller as `req.user`
+
   }
 ));
 
@@ -64,7 +70,7 @@ app.post('/auth/facebook/token',
   function (req, res) {
     // do something with req.user 
     console.log(req.user);
-    res.send(req.user);
+    res.send(req.user? 200 : 401);
   }
 );
 
