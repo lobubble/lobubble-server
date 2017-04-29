@@ -30,16 +30,21 @@ router.get('/login', function(req, res, next){
 	var access_token = req.query.access_token;
 	
     request({
-        url: "https://graph.facebook.com/v2.9/me?access_token=" + access_token,
+        url: "https://graph.facebook.com/v2.9/me?access_token=" + access_token
         // url: req.protocol + '://secure.c.i' + '/api/user/profile',
-        headers: req.headers
+        // headers: req.headers
     }, function (err, res2, body) {
         // console.log(body);
-
+		if(err){
+			next(err);
+			return;
+		}
+		
         try {
 			res.send(res2);
 			// mysql_query("insert into `account` (`id`, `token`, `fb_id`, `time`) values(NULL, '"+access_token+"')")
         } catch (error) {
+			next(error);
         }
     });
 });
