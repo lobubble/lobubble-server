@@ -35,13 +35,13 @@ router.get('/login', function(req, res, next){
         // headers: req.headers
     }, function (err, res2, body) {
         // console.log(body);
-		if(err){
-			next(err);
-			return;
-		}
-		
+		// if(err){
+		// 	next(err);
+		// 	return;
+		// }
+
         try {
-			res.send(res2);
+			res.send(body);
 			// mysql_query("insert into `account` (`id`, `token`, `fb_id`, `time`) values(NULL, '"+access_token+"')")
         } catch (error) {
 			next(error);
