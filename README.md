@@ -180,3 +180,22 @@ Node.js server for lobubble at Startup Weekend
     }
 ]
 ```
+
+ - GET /api/v1/getCustomImage?id=*{페이스북 아이디}*
+	 - 페이스북 사진 이외에 임의로 올린 사진들
+```
+[
+    {
+        "id":1,
+        "fb_id":"8",
+        "file":"/img/profile/8-1.jpg",
+        "time":"2017-04-29T19:19:23.000Z"
+    },
+    {
+        "id":2,
+        "fb_id":"8",
+        "file":"/img/profile/8-2.jpg",
+        "time":"2017-04-29T19:20:03.000Z"
+    }
+]
+```
