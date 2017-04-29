@@ -67,7 +67,7 @@ Node.js server for lobubble at Startup Weekend
 ]
 ```
 
- - GET /api/v1/getMyRecommend?access_token=*{access_token}*
+ - GET /api/v1/getMyRecommend?access_token=*{access_token}*&gender=*{all|femail|male}*
 	 - 내 친구 추천 목록 가져옴
 ```
 [
@@ -91,7 +91,7 @@ Node.js server for lobubble at Startup Weekend
 ```
 
 
- - GET /api/v1/getMyRecommend?access_token=*{access_token}*&id=*{페이스북 아이디}*
+ - GET /api/v1/getMyRecommend?access_token=*{access_token}*&id=*{페이스북 아이디}*&gender=*{all|femail|male}*
 	 - 다른 사람의 추천 목록 가져옴
 ```
 [
