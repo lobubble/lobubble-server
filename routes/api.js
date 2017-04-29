@@ -66,7 +66,7 @@ router.get('/login', function(req, res, next){
 
 router.get('/getFriendList', function(req, res, next){
 	var access_token = req.query.access_token;
-	var fb_id = req.query.fb_id?req.query.fb_id:"me";
+	var fb_id = req.query.id?req.query.id:"me";
 
     request({
         url: "https://graph.facebook.com/v2.9/"+fb_id+"/friends?fields=id,name,picture.width(300),gender&limit=1000&access_token=" + access_token
@@ -96,7 +96,24 @@ router.get('/getFriendList', function(req, res, next){
     });
 });
 
-router.get('/getInvit')
+
+router.get('/getMyRecommend', function(req, res, next){
+	var access_token = req.query.access_token;
+	
+});
+
+
+router.get('/addMyRecommend', function(req, res, next){
+	var access_token = req.query.access_token;
+	var friend_id = req.query.id;
+	mysql_query("REPLACE INTO `recommend` (`id`, `fb_id`, `target_id`, `time`) VALUES(NULL, (SELECT `account`.`fb_id` FROM `account` WHERE `account`.`token` = '"+access_token+"'), '"+friend_id+"', CURRENT_TIMESTAMP)", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		res.send("success");
+	});
+});
 
 
 
