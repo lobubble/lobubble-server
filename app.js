@@ -64,7 +64,7 @@ app.post('/auth/facebook/token',
   function (req, res) {
     // do something with req.user 
     console.log(req.user);
-    res.send(req.user? 200 : 401);
+    res.send(req.user);
   }
 );
 
