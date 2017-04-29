@@ -50,7 +50,7 @@ router.get('/login', function(req, res, next){
 					next(err);
 					return;
 				}
-				mysql_query("REPLACE INTO `user` (`id`, `fb_id`, `name`, `picture`, `gender`, `time`) VALUES(NULL, '"+body.id+"', '"+body.name+"', '"+body.picture.data.url+"', '"+body.gender +"', CURRENT_TIMESTAMP)", function(err, rows, fields){
+				mysql_query("REPLACE INTO `user` (`id`, `fb_id`, `name`, `picture`, `gender`, `time`) VALUES(NULL, '"+body.id+"', '"+body.name+"', '"+body.picture+"', '"+body.gender +"', CURRENT_TIMESTAMP)", function(err, rows, fields){
 					if(err){
 						// next(err);
 						// return;
