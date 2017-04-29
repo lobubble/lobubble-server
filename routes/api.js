@@ -136,6 +136,35 @@ router.get('/addMyRecommend', function(req, res, next){
 	});
 });
 
+router.get('/removeMyRecommend', function(req, res, next){
+	var id = req.query.id;
+	
+	mysql_query("DELETE FROM `recommend` WHERE `id` = '"+id+"'", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		request({
+			url: req.protocol + '://' + req.get('host') + '/api/v1/getMyRecommend?access_token=' + access_token
+		}, function(err, res2, body){
+			res.send(body);
+		});
+	});
+});
+
+router.post('/changeMyIntroduce', function(req, res, next){
+	var access_token = req.query.access_token;
+	var introduce = req.body.introduce;
+	
+	mysql_query("UPDATE `user` SET `introduce` = '"+introduce+"' WHERE `fb_id` = (SELECT `fb_id` FROM `account` WHERE `token` = '"+ access_token +"');", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
+		res.send(rows);
+	});
+});
+
 
 
 
