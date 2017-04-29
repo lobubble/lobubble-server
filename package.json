@@ -11,6 +11,7 @@
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
     "express": "~4.13.4",
+    "express-session": "^1.15.2",
     "morgan": "~1.7.0",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",

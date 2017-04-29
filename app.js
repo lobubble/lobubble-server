@@ -12,7 +12,7 @@ var apis = require('./routes/api');
 
 var app = express();
 
-// var session = require('express-session');
+var session = require('express-session');
 
 try{
   var nodeadmin = require('nodeadmin');
@@ -40,8 +40,19 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use( session({ 
+	secret: 'lobubble',
+	name:   'lobubble',
+	// store:  new RedisStore({
+	// 	host: '127.0.0.1',
+	// 	port: 6379
+	// }),
+	proxy:  true,
+    resave: true,
+    saveUninitialized: true
+}));
 
-app.use(express.cookieSession({ secret: 'tobo!', maxAge: 360*5 }));
+// app.use(express.cookieSession({ secret: 'tobo!', maxAge: 360*5 }));
 app.use(passport.initialize());
 app.use(passport.session());  
 
