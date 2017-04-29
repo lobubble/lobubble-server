@@ -30,7 +30,7 @@ router.get('/login', function(req, res, next){
 	var access_token = req.query.access_token;
 	
     request({
-        url: "https://graph.facebook.com/v2.9/me?access_token=" + access_token
+        url: "https://graph.facebook.com/v2.9/me?fields=id,name,picture.width(400),gender&access_token=" + access_token
         // url: req.protocol + '://secure.c.i' + '/api/user/profile',
         // headers: req.headers
     }, function (err, res2, body) {
@@ -56,8 +56,22 @@ router.get('/login', function(req, res, next){
     });
 });
 
-router.get('/getAppUserList', function(req, res, next){
+router.get('/getFriendList', function(req, res, next){
+	var access_token = req.query.access_token;
+	var fb_id = req.query.fb_id?req.query.fb_id:"me";
 
+    request({
+        url: "https://graph.facebook.com/v2.9/"+fb_id+"/friends?fields=id,name,picture.width(300),gender&limit=1000&access_token=" + access_token
+        // url: req.protocol + '://secure.c.i' + '/api/user/profile',
+        // headers: req.headers
+    }, function (err, res2, body) {
+        try {
+			body = JSON.parse(body);
+			res.send(body);
+        } catch (error) {
+			next(error);
+        }
+    });
 });
 
 router.get('/getInvit')
