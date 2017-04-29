@@ -43,12 +43,18 @@ router.get('/login', function(req, res, next){
         try {
 
 			body = JSON.parse(body);
-			mysql_query("insert into `account` (`id`, `token`, `fb_id`, `time`) values(NULL, '"+access_token+"', '"+body.id+"', CURRENT_TIMESTAMP) ON DUPLICATE KEY UPDATE `token`='"+access_token+"'", function(err, rows, fields){
+			mysql_query("REPLACE INTO `account` (`id`, `token`, `fb_id`, `time`) VALUES(NULL, '"+access_token+"', '"+body.id+"', CURRENT_TIMESTAMP)", function(err, rows, fields){
 				if(err){
 					next(err);
 					return;
 				}
-				res.send(body);
+				mysql_query("REPLACE INTO `user` (`id`, `fb_id`, `name`, `picture`, `gender`, `time`) VALUES(NULL, '"+body.id+"', '"+body.name+"', '"+body.picture.data.url+"', '"+body.gender +"', CURRENT_TIMESTAMP)", function(err, rows, fields){
+					if(err){
+						// next(err);
+						// return;
+					}
+					res.send(body);
+				});
 			});
         } catch (error) {
 			next(error);
@@ -67,6 +73,15 @@ router.get('/getFriendList', function(req, res, next){
     }, function (err, res2, body) {
         try {
 			body = JSON.parse(body);
+			for(item in body.data){
+				mysql_query("REPLACE INTO `user` (`id`, `fb_id`, `name`, `picture`, `gender`, `time`) VALUES(NULL, '"+body.data[item].id+"', '"+body.data[item].name+"', '"+body.data[item].picture.data.url+"', '"+body.data[item].gender +"', CURRENT_TIMESTAMP)", function(err, rows, fields){
+					if(err){
+						// next(err);
+						// return;
+					}
+					// res.send(body);
+				});
+			}
 			res.send(body);
         } catch (error) {
 			next(error);
