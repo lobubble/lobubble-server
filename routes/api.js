@@ -107,9 +107,9 @@ router.get('/getMyRecommend', function(req, res, next){
 	else{
 		gender = " AND `user`.`gender`='" + gender + "' "; 
 	}
-	var fQuery = fb_id?fb_id:"(SELECT `account`.`fb_id` FROM `account` WHERE `account`.`token` = '"+access_token+"')";
+	var fQuery = fb_id?"'" + fb_id + "'":"(SELECT `account`.`fb_id` FROM `account` WHERE `account`.`token` = '"+access_token+"')";
 
-	mysql_query("SELECT `recommend`.*, `user`.`name`, `user`.`picture` FROM `recommend`, `user` WHERE `recommend`.`fb_id` = `user`.`fb_id` AND `recommend`.`fb_id` = " + fQuery + gender, function(err, rows, fields){
+	mysql_query("SELECT `recommend`.*, (SELECT `user`.`name` FROM `user` WHERE `user`.`fb_id` = `recommend`.`target_id`), (SELECT `user`.`picture` FROM `user` WHERE `user`.`fb_id` = `recommend`.`target_id`) FROM `recommend` WHERE `recommend`.`fb_id` = " + fQuery + gender, function(err, rows, fields){
 		if(err){
 			next(err);
 			return;
