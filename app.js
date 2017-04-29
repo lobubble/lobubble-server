@@ -53,14 +53,14 @@ passport.use(new FacebookTokenStrategy({
     clientSecret: "a0b5f9955a5e9f8a24b45adc0326ff3f"
   }, function(accessToken, refreshToken, profile, done) {
     
-    // var user = {
-    //     'email': profile.emails[0].value,
-    //     'name' : profile.name.givenName + ' ' + profile.name.familyName,
-    //     'id'   : profile.id,
-    //     'token': accessToken
-    // }
+    var user = {
+        'email': profile.emails[0].value,
+        'name' : profile.name.givenName + ' ' + profile.name.familyName,
+        'id'   : profile.id,
+        'token': accessToken
+    }
 
-    return done(null, profile); // the user object we just made gets passed to the route's controller as `req.user`
+    return done(null, user); // the user object we just made gets passed to the route's controller as `req.user`
 
   }
 ));
