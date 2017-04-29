@@ -105,7 +105,7 @@ router.get('/getMyRecommend', function(req, res, next){
 		gender = "";
 	}
 	else{
-		gender = " AND `user`.`gender`=" + gender + " "; 
+		gender = " AND `user`.`gender`='" + gender + "' "; 
 	}
 	var fQuery = fb_id?fb_id:"(SELECT `account`.`fb_id` FROM `account` WHERE `account`.`token` = '"+access_token+"')";
 
