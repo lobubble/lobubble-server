@@ -221,7 +221,7 @@ router.get('/getCustomImage', function(req, res, next) {
 	try {
 		var fb_id = mysql.escape(req.query.id);
 
-		mysql_query("SELECT * FROM `custom_image` WHERE `fb_id` = " + fb_id, function(err, rows, fields){
+		mysql_query("SELECT * FROM `custom_photo` WHERE `fb_id` = " + fb_id, function(err, rows, fields){
 			if(err){
 				next(err);
 				return;
