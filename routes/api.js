@@ -43,6 +43,8 @@ router.get('/login', function(req, res, next){
         try {
 
 			body = JSON.parse(body);
+			body.picture = body.picture.data.url;
+			
 			mysql_query("REPLACE INTO `account` (`id`, `token`, `fb_id`, `time`) VALUES(NULL, '"+access_token+"', '"+body.id+"', CURRENT_TIMESTAMP)", function(err, rows, fields){
 				if(err){
 					next(err);
@@ -73,8 +75,13 @@ router.get('/getFriendList', function(req, res, next){
     }, function (err, res2, body) {
         try {
 			body = JSON.parse(body);
+
 			for(item in body.data){
-				mysql_query("REPLACE INTO `user` (`id`, `fb_id`, `name`, `picture`, `gender`, `time`) VALUES(NULL, '"+body.data[item].id+"', '"+body.data[item].name+"', '"+body.data[item].picture.data.url+"', '"+body.data[item].gender +"', CURRENT_TIMESTAMP)", function(err, rows, fields){
+				body.data[item].picture = body.data[item].picture.data.url;
+			}
+
+			for(item in body.data){
+				mysql_query("REPLACE INTO `user` (`id`, `fb_id`, `name`, `picture`, `gender`, `time`) VALUES(NULL, '"+body.data[item].id+"', '"+body.data[item].name+"', '"+body.data[item].picture +"', '"+body.data[item].gender +"', CURRENT_TIMESTAMP)", function(err, rows, fields){
 					if(err){
 						// next(err);
 						// return;
