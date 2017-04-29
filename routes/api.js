@@ -100,6 +100,10 @@ router.get('/getFriendList', function(req, res, next){
 router.get('/getMyRecommend', function(req, res, next){
 	var access_token = req.query.access_token;
 	mysql_query("SELECT *, (SELECT `user`.`name`, `user`.`picture` FROM `user` WHERE `user`.`fb_id` = `recommend`.`targer_id` ) FROM `recommend` WHERE `recommend`.`fb_id` = (SELECT `account`.`fb_id` FROM `account` WHERE `account`.`token` = '"+access_token+"')", function(err, rows, fields){
+		if(err){
+			next(err);
+			return;
+		}
 		res.send(rows);
 	});
 });
