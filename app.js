@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 
 var routes = require('./routes/index');
 var apis = require('./routes/api');
@@ -22,6 +23,10 @@ catch(e){
 
 }
 
+
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -34,6 +39,40 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+
+
+var FacebookTokenStrategy = require('passport-facebook-token');
+
+passport.use(new FacebookTokenStrategy({
+    clientID: "206469993192597",
+    clientSecret: "a0b5f9955a5e9f8a24b45adc0326ff3f"
+  }, function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate({facebookId: profile.id}, function (error, user) {
+      return done(error, user);
+    });
+  }
+));
+
+
+app.post('/auth/facebook/token',
+  passport.authenticate('facebook-token'),
+  function (req, res) {
+    // do something with req.user 
+    console.log(req.user);
+    res.send(req.user? 200 : 401);
+  }
+);
+
+
+
+
+
+
+
 
 app.use('/', routes);
 app.use('/api/', apis);
