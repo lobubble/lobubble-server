@@ -139,7 +139,7 @@ router.get('/addMyRecommend', function(req, res, next){
 router.get('/removeMyRecommend', function(req, res, next){
 	var id = req.query.id;
 	
-	mysql_query("DELETE FROM `recommend` WHERE `id` = '"+id+"'", function(err, rows, fields){
+	mysql_query("DELETE FROM `recommend` WHERE `target_id` = '"+id+"' AND `fb_id` = (SELECT `fb_id` FROM `account` WHERE `token` = '"+ access_token +"')", function(err, rows, fields){
 		if(err){
 			next(err);
 			return;

@@ -114,8 +114,8 @@ Node.js server for lobubble at Startup Weekend
 ]
 ```
 
- - GET /api/v1/removeMyRecommend?id=*{id}*
-	 - 다른 사람의 추천 목록 가져옴
+ - GET /api/v1/removeMyRecommend?id=*{페이스북 id}*
+	 - 내 추천목록에서 해당하는 사람 삭제
 ```
 [
     {
@@ -170,20 +170,13 @@ Node.js server for lobubble at Startup Weekend
 ```
 [
     {
-        "id":2,
+        "id":53,
         "fb_id":"1512965602112023",
-        "target_id":"1916006061951887", 
-        "time":"2017-04-29T12:38:27.000Z",
         "name":"Kim Hanseulmaro",
-        "picture":"https://scontent.xx.fbcdn.net/v/t1.0-1/s480x480/15202551_1289281151147137_5720633694706240800_n.jpg?oh=863fa9aba32067b40e0d30c58b88ac6b&oe=5989B21B"
-    },
-    {
-        "id":4,
-        "fb_id":"1512965602112023",
-        "target_id":"undefined",
-        "time":"2017-04-29T12:47:00.000Z",
-        "name":"Kim Hanseulmaro",
-        "picture":"https://scontent.xx.fbcdn.net/v/t1.0-1/s480x480/15202551_1289281151147137_5720633694706240800_n.jpg?oh=863fa9aba32067b40e0d30c58b88ac6b&oe=5989B21B"
+        "picture":"https://scontent.xx.fbcdn.net/v/t1.0-1/s320x320/15202551_1289281151147137_5720633694706240800_n.jpg?oh=7701140821b066c91961516cc9770185&oe=5992855C",
+        "gender":"male",
+        "introduce":null,
+        "time":"2017-04-29T16:12:44.000Z"
     }
 ]
 ```
