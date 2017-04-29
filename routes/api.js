@@ -3,8 +3,36 @@ var request = require('request');
 var fs = require('fs');
 var mysql = require('mysql');
 
-
 var router = express.Router();
+
+
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, __dirname + '/../public/uploadedFiles/')
+  },
+  filename: function (req, file, cb) {
+    cb(null,  + Date.now() + "." + file.originalname.split(".").pop())
+  }
+});
+
+ 
+
+
+var uploading = multer({
+  fileFilter: function (req, file, cb) {
+	var UnacceptableMimeTypes = ["exe", "com", "scr", "sh", "ln"]
+    if (UnacceptableMimeTypes.indexOf(file.originalname.split(".").pop()) > -1) {
+      return cb(new Error('Unacceptable file type.'))
+    }
+
+    cb(null, true)
+  },
+  storage: storage,
+  limits: {fileSize: 1000 * 1000 * 20, files:5}
+})
+
 
 
 var mysql_query = function (query, callback) {
@@ -180,7 +208,31 @@ router.get('/getUserInfomation', function(req, res, next){
 	})	
 });
 
+// router.post('/uploadCustomImage', uploading.fields([{name: "file", maxCount: 1}]), function(req, res, next){
+// 	// req.files.file[0]
+// 	try {
+		
+// 	} catch (error) {
+// 		next(error);	
+// 	}
+// });
 
+router.get('/getCustomImage', function(req, res, next) {
+	try {
+		var fb_id = mysql.excape(req.query.id);
+
+		mysql_query("SELECT * FROM `custom_image` WHERE `fb_id` = " + fb_id, function(err, rows, fields){
+			if(err){
+				next(err);
+				return;
+			}
+			res.send(rows);
+		});
+		
+	} catch (error) {
+		next(error);
+	}
+});
 
 
 
